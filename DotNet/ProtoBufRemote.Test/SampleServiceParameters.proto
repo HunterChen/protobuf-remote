@@ -1,0 +1,13 @@
+
+package ProtoBufRemote.Test;
+
+message MultiplyInput {
+  optional string prefix = 1;
+  required int32 first_number = 2;
+  required int32 second_number = 3;
+}
+
+message MultiplyOutput {
+  required string result_string = 10;
+  required int32 result_number = 11;
+}

@@ -1,0 +1,16 @@
+syntax: glob
+
+*.user
+*.sln.cache
+*.suo
+*.tmp
+*.orig
+*.ncb
+*.log
+*.sdf
+*.opensdf
+obj/*
+bin/*
+Thumbs.db
+_ReSharper*
+
