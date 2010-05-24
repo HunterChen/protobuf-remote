@@ -44,7 +44,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)obj\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
-    <IncludePath>$(ProtoBufIncludePath);C:\Program Files\Microsoft DirectX SDK %28February 2010%29\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProtoBufIncludePath);$(BoostIncludePath);C:\Program Files\Microsoft DirectX SDK %28February 2010%29\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
