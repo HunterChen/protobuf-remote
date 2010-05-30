@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProtoBufRemote", "ProtoBufRemote\ProtoBufRemote.vcxproj", "{F43A5DDB-5E60-4DAC-8B1B-C248B435125E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProtoBufRemoteTest", "ProtoBufRemoteTest\ProtoBufRemoteTest.vcxproj", "{26DD0D61-9C86-4B99-A90D-D10965E2822B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F43A5DDB-5E60-4DAC-8B1B-C248B435125E} = {F43A5DDB-5E60-4DAC-8B1B-C248B435125E}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F43A5DDB-5E60-4DAC-8B1B-C248B435125E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F43A5DDB-5E60-4DAC-8B1B-C248B435125E}.Debug|Win32.Build.0 = Debug|Win32
+		{F43A5DDB-5E60-4DAC-8B1B-C248B435125E}.Release|Win32.ActiveCfg = Release|Win32
+		{F43A5DDB-5E60-4DAC-8B1B-C248B435125E}.Release|Win32.Build.0 = Release|Win32
+		{26DD0D61-9C86-4B99-A90D-D10965E2822B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{26DD0D61-9C86-4B99-A90D-D10965E2822B}.Debug|Win32.Build.0 = Debug|Win32
+		{26DD0D61-9C86-4B99-A90D-D10965E2822B}.Release|Win32.ActiveCfg = Release|Win32
+		{26DD0D61-9C86-4B99-A90D-D10965E2822B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
