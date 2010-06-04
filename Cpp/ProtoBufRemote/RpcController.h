@@ -15,7 +15,7 @@ public:
 
 	virtual void Send(const RpcMessage& message);
 
-	void Receive(const RpcMessage& message);
+	virtual void Receive(const RpcMessage& message);
 
 	void SetChannel(RpcChannel* channel) { m_channel = channel; }
 	void SetClient(RpcClient* client) { m_client = client; }

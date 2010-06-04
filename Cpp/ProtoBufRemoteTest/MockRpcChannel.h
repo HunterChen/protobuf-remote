@@ -8,6 +8,8 @@
 class MockRpcChannel : public ProtoBufRemote::RpcChannel
 {
 public:
+	MockRpcChannel() : ProtoBufRemote::RpcChannel(NULL) { }
+
 	MOCK_METHOD1(Send, void(const ProtoBufRemote::RpcMessage&));
 };
 

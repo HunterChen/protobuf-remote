@@ -9,9 +9,8 @@ class RpcMessage;
 class RpcChannel
 {
 public:
-	RpcChannel();
-
-	RpcChannel(RpcController& controller);
+	RpcChannel(RpcController* controller);
+	virtual ~RpcChannel() { }
 
 	virtual void Send(const RpcMessage& message) = 0;
 

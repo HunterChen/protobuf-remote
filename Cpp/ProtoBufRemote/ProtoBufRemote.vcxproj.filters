@@ -49,6 +49,9 @@
     <ClInclude Include="Generators.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="SocketRpcChannel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="RpcMessage.proto">
@@ -87,6 +90,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MutableParameterList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketRpcChannel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

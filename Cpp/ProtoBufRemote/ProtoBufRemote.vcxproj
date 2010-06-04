@@ -87,6 +87,7 @@
     <ClInclude Include="RpcMessage.pb.h" />
     <ClInclude Include="RpcServer.h" />
     <ClInclude Include="RpcService.h" />
+    <ClInclude Include="SocketRpcChannel.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="RpcMessage.proto">
@@ -111,6 +112,7 @@
     <ClCompile Include="RpcMessage.pb.cc" />
     <ClCompile Include="RpcServer.cpp" />
     <ClCompile Include="RpcService.cpp" />
+    <ClCompile Include="SocketRpcChannel.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

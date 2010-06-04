@@ -7,15 +7,11 @@
 
 namespace ProtoBufRemote {
 
-RpcChannel::RpcChannel()
-	: m_controller(NULL)
+RpcChannel::RpcChannel(RpcController* controller)
+	: m_controller(controller)
 {
-}
-
-RpcChannel::RpcChannel(RpcController& controller)
-	: m_controller(&controller)
-{
-	m_controller->SetChannel(this);
+	if (m_controller)
+		m_controller->SetChannel(this);
 }
 
 }
