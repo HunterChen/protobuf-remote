@@ -26,7 +26,7 @@ class MockSampleService2 : public SampleService2Stub
 {
 public:
 	MOCK_METHOD1(GetSquare, int(int));
-	MOCK_METHOD1(GetString, const std::string&(int));
+	MOCK_METHOD2(GetString, void(int, std::string*));
 	MOCK_METHOD1(DoStuff, void(const std::string&));
 	MOCK_METHOD3(DoOtherStuff, void(const std::string&, int, bool));
 	MOCK_METHOD0(DoEvenMoreStuff, void(void));
@@ -42,7 +42,7 @@ TEST(StubGeneratorTest, Call)
 	MutableParameterList parameters(message);
 	parameters.Add().SetInt(5);
 	RpcMessage::Parameter resultMessage;
-	MutableParameter result(resultMessage);
+	MutableParameter result(&resultMessage);
 
 	bool isSuccess = service.Call("GetSquare", parameters, &result);
 
@@ -86,7 +86,7 @@ TEST(StubGeneratorTest, CallWrongParameterCount)
 	parameters.Add().SetInt(5);
 	parameters.Add().SetInt(6);
 	RpcMessage::Parameter resultMessage;
-	MutableParameter result(resultMessage);
+	MutableParameter result(&resultMessage);
 
 	bool isSuccess = service.Call("GetSquare", parameters, &result);
 
@@ -101,7 +101,7 @@ TEST(StubGeneratorTest, CallWrongParameterType)
 	MutableParameterList parameters(message);
 	parameters.Add().SetString("hello");
 	RpcMessage::Parameter resultMessage;
-	MutableParameter result(resultMessage);
+	MutableParameter result(&resultMessage);
 
 	bool isSuccess = service.Call("GetSquare", parameters, &result);
 

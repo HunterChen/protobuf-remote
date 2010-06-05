@@ -37,7 +37,7 @@ void RpcServer::ReceiveCall(const RpcMessage& message)
 		ParameterList parameters(message);
 
 		RpcMessage::Result* result = m_resultMessage.mutable_result_message();
-		MutableParameter resultParam(*result->mutable_call_result());
+		MutableParameter resultParam(result->mutable_call_result());
 
 		if (service->Call(callMessage.method().c_str(), parameters, &resultParam))
 			result->clear_is_failed();
