@@ -17,7 +17,7 @@ void MutableParameterList::Clear()
 MutableParameter MutableParameterList::Add()
 {
 	RpcMessage::Parameter* paramMessage = m_message.mutable_call_message()->add_parameters();
-	return MutableParameter(*paramMessage);
+	return MutableParameter(paramMessage);
 }
 
 }
