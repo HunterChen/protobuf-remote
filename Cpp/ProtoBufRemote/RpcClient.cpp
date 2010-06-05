@@ -19,10 +19,10 @@ PendingCall* RpcClient::Call(const std::string& service, const std::string& meth
 {
 	assert(m_controller);
 
-	RpcMessage& message = parameters.GetMessage();
+	RpcMessage* message = parameters.GetMessage();
 	int id = m_nextId++;
-	message.set_id(id);
-	RpcMessage::Call* callMessage = message.mutable_call_message();
+	message->set_id(id);
+	RpcMessage::Call* callMessage = message->mutable_call_message();
 	callMessage->set_service(service);
 	callMessage->set_method(method);
 	callMessage->set_expects_result(true);
@@ -30,7 +30,7 @@ PendingCall* RpcClient::Call(const std::string& service, const std::string& meth
 	PendingCall* call = new PendingCall(id);
 	m_pendingCalls.insert(std::make_pair(id, call));
 
-	m_controller->Send(message);
+	m_controller->Send(*message);
 
 	return call;
 }
@@ -46,13 +46,13 @@ void RpcClient::CallWithoutResult(const std::string& service, const std::string&
 {
 	assert(m_controller);
 
-	RpcMessage& message = parameters.GetMessage();
-	message.set_id(m_nextId++);
-	RpcMessage::Call* callMessage = message.mutable_call_message();
+	RpcMessage* message = parameters.GetMessage();
+	message->set_id(m_nextId++);
+	RpcMessage::Call* callMessage = message->mutable_call_message();
 	callMessage->set_service(service);
 	callMessage->set_method(method);
 	callMessage->set_expects_result(false);
-	m_controller->Send(message);
+	m_controller->Send(*message);
 }
 
 void RpcClient::ReceiveResult(const RpcMessage& resultMessage)

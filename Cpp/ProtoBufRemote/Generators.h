@@ -28,7 +28,7 @@
 	class name##Proxy : public ::ProtoBufRemote::Proxy \
 	{ \
 	public: \
-		name##Proxy(::ProtoBufRemote::RpcClient& client) : ::ProtoBufRemote::Proxy(client, #name) { } \
+		name##Proxy(::ProtoBufRemote::RpcClient* client) : ::ProtoBufRemote::Proxy(client, #name) { } \
 		BOOST_PP_SEQ_FOR_EACH(PBR_X_PROXY_METHOD, ~, methods) \
 	};
 
@@ -121,21 +121,21 @@
 	m_parameters.Add().PBR_X_PARAM_SET_FUNC(param) (BOOST_PP_CAT(p, i)); \
 
 #define PBR_X_METHOD_CALL(method) \
-	::ProtoBufRemote::PendingCall* call = m_client.Call(m_serviceName, BOOST_PP_STRINGIZE(PBR_X_METHOD_NAME(method)), \
+	::ProtoBufRemote::PendingCall* call = m_client->Call(m_serviceName, BOOST_PP_STRINGIZE(PBR_X_METHOD_NAME(method)), \
 		m_parameters); \
 	call->Wait(); \
 	BOOST_PP_IF(PBR_X_PARAM_IS_RESULT_PTR(PBR_X_METHOD_RETURN(method)), \
 		call->GetResult()->PBR_X_PARAM_GET_FUNC(PBR_X_METHOD_RETURN(method))(resultPtr); \
-		m_client.ReleaseCall(call); \
+		m_client->ReleaseCall(call); \
 	, \
 		PBR_X_PARAM_TYPE(PBR_X_METHOD_RETURN(method)) result \
 			= call->GetResult()->PBR_X_PARAM_GET_FUNC(PBR_X_METHOD_RETURN(method))(); \
-		m_client.ReleaseCall(call); \
+		m_client->ReleaseCall(call); \
 		return result; \
 	)
 
 #define PBR_X_METHOD_CALLWITHOUTRESULT(method) \
-	m_client.CallWithoutResult(m_serviceName, BOOST_PP_STRINGIZE(PBR_X_METHOD_NAME(method)), m_parameters);
+	m_client->CallWithoutResult(m_serviceName, BOOST_PP_STRINGIZE(PBR_X_METHOD_NAME(method)), m_parameters);
 
 
 //stub

@@ -8,14 +8,14 @@ namespace ProtoBufRemote {
 class MutableParameterList : public ParameterList
 {
 public:
-	MutableParameterList(RpcMessage& message);
+	MutableParameterList(RpcMessage* message);
 
 	void Clear();
 
 	MutableParameter Add();
 
 private:
-	RpcMessage& m_message;
+	RpcMessage* m_message;
 };
 
 }

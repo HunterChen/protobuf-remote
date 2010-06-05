@@ -39,7 +39,7 @@ TEST(StubGeneratorTest, Call)
 	EXPECT_CALL(service, GetSquare(5)).WillOnce(Return(25));
 
 	RpcMessage message;
-	MutableParameterList parameters(message);
+	MutableParameterList parameters(&message);
 	parameters.Add().SetInt(5);
 	RpcMessage::Parameter resultMessage;
 	MutableParameter result(&resultMessage);
@@ -57,7 +57,7 @@ TEST(StubGeneratorTest, CallWithoutResult)
 	EXPECT_CALL(service, DoStuff("hello"));
 
 	RpcMessage message;
-	MutableParameterList parameters(message);
+	MutableParameterList parameters(&message);
 	parameters.Add().SetString("hello");
 
 	bool isSuccess = service.Call("DoStuff", parameters, NULL);
@@ -70,7 +70,7 @@ TEST(StubGeneratorTest, CallUnknownMethod)
 	MockSampleService2 service;
 
 	RpcMessage message;
-	MutableParameterList parameters(message);
+	MutableParameterList parameters(&message);
 
 	bool isSuccess = service.Call("NotAMethod", parameters, NULL);
 
@@ -82,7 +82,7 @@ TEST(StubGeneratorTest, CallWrongParameterCount)
 	MockSampleService2 service;
 
 	RpcMessage message;
-	MutableParameterList parameters(message);
+	MutableParameterList parameters(&message);
 	parameters.Add().SetInt(5);
 	parameters.Add().SetInt(6);
 	RpcMessage::Parameter resultMessage;
@@ -98,7 +98,7 @@ TEST(StubGeneratorTest, CallWrongParameterType)
 	MockSampleService2 service;
 
 	RpcMessage message;
-	MutableParameterList parameters(message);
+	MutableParameterList parameters(&message);
 	parameters.Add().SetString("hello");
 	RpcMessage::Parameter resultMessage;
 	MutableParameter result(&resultMessage);

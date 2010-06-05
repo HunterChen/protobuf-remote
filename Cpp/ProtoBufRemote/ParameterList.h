@@ -20,7 +20,7 @@ public:
 private:
 	friend RpcClient;
 
-	RpcMessage& GetMessage() const { return const_cast<RpcMessage&>(m_message); }
+	RpcMessage* GetMessage() const { return const_cast<RpcMessage*>(&m_message); }
 
 	const RpcMessage& m_message;
 };

@@ -68,7 +68,7 @@ TEST_F(RpcClientTest, CallWithoutResult)
 		Property(&RpcMessage::call_message, Property(&RpcMessage::Call::expects_result, Eq(false))))));
 
 	RpcMessage message;
-	MutableParameterList parameters(message);
+	MutableParameterList parameters(&message);
 	parameters.Add().SetInt(42);
 	m_client->CallWithoutResult("ServiceName", "MethodName", parameters);
 }
@@ -80,7 +80,7 @@ TEST_F(RpcClientTest, Call)
 		.WillOnce(Invoke(this, &RpcClientTest::SendResult));
 
 	RpcMessage message;
-	MutableParameterList parameters(message);
+	MutableParameterList parameters(&message);
 	parameters.Add().SetInt(42);
 	PendingCall* call = m_client->Call("ServiceName", "MethodName", parameters);
 	call->Wait();
