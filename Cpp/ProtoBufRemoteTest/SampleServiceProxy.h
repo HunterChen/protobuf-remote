@@ -7,7 +7,7 @@
 class SampleServiceProxy : public ProtoBufRemote::Proxy
 {
 public:
-	SampleServiceProxy(ProtoBufRemote::RpcClient& client)
+	SampleServiceProxy(ProtoBufRemote::RpcClient* client)
 		: ProtoBufRemote::Proxy(client, "SampleService")
 	{
 	}
@@ -16,10 +16,10 @@ public:
 	{
 		m_parameters.Clear();
 		m_parameters.Add().SetInt(x);
-		ProtoBufRemote::PendingCall* call = m_client.Call(m_serviceName, "GetSquare", m_parameters);
+		ProtoBufRemote::PendingCall* call = m_client->Call(m_serviceName, "GetSquare", m_parameters);
 		call->Wait();
 		int result = call->GetResult()->GetInt();
-		m_client.ReleaseCall(call);
+		m_client->ReleaseCall(call);
 		return result;
 	}
 
@@ -27,7 +27,7 @@ public:
 	{
 		m_parameters.Clear();
 		m_parameters.Add().SetString(str);
-		m_client.CallWithoutResult(m_serviceName, "DoStuff", m_parameters);
+		m_client->CallWithoutResult(m_serviceName, "DoStuff", m_parameters);
 	}
 };
 

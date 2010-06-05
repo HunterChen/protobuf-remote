@@ -28,7 +28,7 @@ bool IsDoStuffParameterListCorrect(const ParameterList& paramList)
 TEST(ProxyTest, Call)
 {
 	MockRpcClient client;
-	SampleServiceProxy proxy(client);
+	SampleServiceProxy proxy(&client);
 
 	PendingCall call(0);
 	RpcMessage::Parameter resultParam;
@@ -46,7 +46,7 @@ TEST(ProxyTest, Call)
 TEST(ProxyTest, CallWithoutResult)
 {
 	MockRpcClient client;
-	SampleServiceProxy proxy(client);
+	SampleServiceProxy proxy(&client);
 
 	EXPECT_CALL(client, CallWithoutResult("SampleService", "DoStuff", Truly(IsDoStuffParameterListCorrect)));
 
