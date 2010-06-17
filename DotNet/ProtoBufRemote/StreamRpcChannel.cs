@@ -79,6 +79,10 @@ namespace ProtoBufRemote
                     if (bytesRead == 0)
                         break;
                 }
+                catch (IOException)
+                {
+                    break;
+                }
                 catch (ObjectDisposedException)
                 {
                     break;
@@ -115,7 +119,8 @@ namespace ProtoBufRemote
         private void WriteRun()
         {
             var waitHandles = new WaitHandle[] { queueEvent, closeEvent };
-            while (true)
+            bool isTerminated = false;
+            while (!isTerminated)
             {
                 int waitIndex = WaitHandle.WaitAny(waitHandles);
 
@@ -123,7 +128,15 @@ namespace ProtoBufRemote
                 while (queuedMessages.Count > 0)
                 {
                     RpcMessage message = queuedMessages.Dequeue();
-                    Serializer.SerializeWithLengthPrefix(writeStream, message, PrefixStyle.Fixed32);
+                    try
+                    {
+                        Serializer.SerializeWithLengthPrefix(writeStream, message, PrefixStyle.Fixed32);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        isTerminated = true;
+                        break;
+                    }
                 }
                 queueMutex.ReleaseMutex();
 

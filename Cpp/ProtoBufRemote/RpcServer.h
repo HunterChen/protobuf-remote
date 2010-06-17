@@ -18,6 +18,8 @@ public:
 	bool RegisterService(RpcService* service);
 	bool UnregisterService(RpcService* service);
 
+	RpcService* FindService(const std::string& serviceName);
+
 	virtual void ReceiveCall(const RpcMessage& message);
 
 private:
