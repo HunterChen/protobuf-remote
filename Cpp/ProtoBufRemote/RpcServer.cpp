@@ -27,6 +27,14 @@ bool RpcServer::UnregisterService(RpcService* service)
 	return (m_services.erase(service->GetName()) == 1);
 }
 
+RpcService* RpcServer::FindService(const std::string& serviceName)
+{
+	ServiceMap::iterator iter = m_services.find(serviceName);
+	if (iter != m_services.end())
+		return iter->second;
+	return NULL;
+}
+
 void RpcServer::ReceiveCall(const RpcMessage& message)
 {
 	const RpcMessage::Call& callMessage = message.call_message();

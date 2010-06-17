@@ -63,7 +63,8 @@ void SocketRpcChannel::Run()
 	const unsigned int maxAllowedMessageSize = 1024*1024;
 
 	WSAEVENT events[3] = { m_terminateEvent, selectEvent, m_sendEvent };
-	for ( ;; )
+	bool isTerminated = false;
+	while (!isTerminated)
 	{
 		int waitResult = WSAWaitForMultipleEvents(isSending ? 2 : 3, events, FALSE, WSA_INFINITE, FALSE);
 		if (waitResult == 0)
@@ -92,10 +93,18 @@ void SocketRpcChannel::Run()
 			isReceiveReady = (networkEvents.lNetworkEvents & FD_READ) ? true : false;
 		}
 
-		if (isSending && isSendReady)
+		while (isSending && isSendReady && !isTerminated)
 		{
 			int bytesSent = send(m_socket, &currentSendMessage.m_data[sendPos], currentSendMessage.m_size-sendPos, 0);
-			if (bytesSent != SOCKET_ERROR)
+			if (bytesSent == SOCKET_ERROR)
+			{
+				int error = WSAGetLastError();
+				if (error == WSAEWOULDBLOCK)
+					isSendReady = false;
+				else
+					isTerminated = true;
+			}
+			else
 			{
 				sendPos += bytesSent;
 
@@ -119,12 +128,22 @@ void SocketRpcChannel::Run()
 			}
 		}
 
-		if (isReceiveReady)
+		while (isReceiveReady && !isTerminated)
 		{
 			int bytesReceived = recv(m_socket, &receiveBuffer[receivePos], receiveSize-receivePos, 0);
 			if (bytesReceived == 0)
-				break;
-			if (bytesReceived != SOCKET_ERROR)
+			{
+				isTerminated = true;
+			}
+			else if (bytesReceived == SOCKET_ERROR)
+			{
+				int error = WSAGetLastError();
+				if (error == WSAEWOULDBLOCK)
+					isReceiveReady = false;
+				else
+					isTerminated = true;
+			}
+			else
 			{
 				receivePos += bytesReceived;
 
