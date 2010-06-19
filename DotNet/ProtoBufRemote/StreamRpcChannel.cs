@@ -79,11 +79,11 @@ namespace ProtoBufRemote
                     if (bytesRead == 0)
                         break;
                 }
-                catch (IOException)
+                catch (InvalidOperationException)
                 {
                     break;
                 }
-                catch (ObjectDisposedException)
+                catch (IOException)
                 {
                     break;
                 }
