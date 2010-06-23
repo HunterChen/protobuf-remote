@@ -137,6 +137,11 @@ namespace ProtoBufRemote
                         isTerminated = true;
                         break;
                     }
+                    catch (IOException)
+                    {
+                        isTerminated = true;
+                        break;
+                    }
                 }
                 queueMutex.ReleaseMutex();
 
