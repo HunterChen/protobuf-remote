@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+// Option: missing-value detection (*Specified/ShouldSerialize*/Reset*) enabled
+    
 // Generated from: RpcMessage.proto
 namespace ProtoBufRemote
 {
@@ -84,23 +86,41 @@ namespace ProtoBufRemote
     public Result() {}
     
 
-    private bool _isFailed = default(bool);
+    private bool? _isFailed;
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"is_failed", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue(default(bool))]
     public bool IsFailed
     {
-      get { return _isFailed; }
+      get { return _isFailed?? default(bool); }
       set { _isFailed = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool IsFailedSpecified
+    {
+      get { return _isFailed != null; }
+      set { if (value == (_isFailed== null)) _isFailed = value ? IsFailed : (bool?)null; }
+    }
+    private bool ShouldSerializeIsFailed() { return IsFailedSpecified; }
+    private void ResetIsFailed() { IsFailedSpecified = false; }
+    
 
-    private string _errorMessage = "";
+    private string _errorMessage;
     [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"error_message", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue("")]
     public string ErrorMessage
     {
-      get { return _errorMessage; }
+      get { return _errorMessage?? ""; }
       set { _errorMessage = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool ErrorMessageSpecified
+    {
+      get { return _errorMessage != null; }
+      set { if (value == (_errorMessage== null)) _errorMessage = value ? ErrorMessage : (string)null; }
+    }
+    private bool ShouldSerializeErrorMessage() { return ErrorMessageSpecified; }
+    private void ResetErrorMessage() { ErrorMessageSpecified = false; }
+    
 
     private ProtoBufRemote.RpcMessage.Parameter _callResult = null;
     [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"call_result", DataFormat = global::ProtoBuf.DataFormat.Default)]
@@ -121,95 +141,185 @@ namespace ProtoBufRemote
     public Parameter() {}
     
 
-    private byte[] _protoParam = null;
+    private byte[] _protoParam;
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"proto_param", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue(null)]
     public byte[] ProtoParam
     {
-      get { return _protoParam; }
+      get { return _protoParam?? null; }
       set { _protoParam = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool ProtoParamSpecified
+    {
+      get { return _protoParam != null; }
+      set { if (value == (_protoParam== null)) _protoParam = value ? ProtoParam : (byte[])null; }
+    }
+    private bool ShouldSerializeProtoParam() { return ProtoParamSpecified; }
+    private void ResetProtoParam() { ProtoParamSpecified = false; }
+    
 
-    private string _stringParam = "";
+    private string _stringParam;
     [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"string_param", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue("")]
     public string StringParam
     {
-      get { return _stringParam; }
+      get { return _stringParam?? ""; }
       set { _stringParam = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool StringParamSpecified
+    {
+      get { return _stringParam != null; }
+      set { if (value == (_stringParam== null)) _stringParam = value ? StringParam : (string)null; }
+    }
+    private bool ShouldSerializeStringParam() { return StringParamSpecified; }
+    private void ResetStringParam() { StringParamSpecified = false; }
+    
 
-    private int _intParam = default(int);
+    private int? _intParam;
     [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"int_param", DataFormat = global::ProtoBuf.DataFormat.ZigZag)]
-    [global::System.ComponentModel.DefaultValue(default(int))]
     public int IntParam
     {
-      get { return _intParam; }
+      get { return _intParam?? default(int); }
       set { _intParam = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool IntParamSpecified
+    {
+      get { return _intParam != null; }
+      set { if (value == (_intParam== null)) _intParam = value ? IntParam : (int?)null; }
+    }
+    private bool ShouldSerializeIntParam() { return IntParamSpecified; }
+    private void ResetIntParam() { IntParamSpecified = false; }
+    
 
-    private uint _uintParam = default(uint);
+    private uint? _uintParam;
     [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"uint_param", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    [global::System.ComponentModel.DefaultValue(default(uint))]
     public uint UintParam
     {
-      get { return _uintParam; }
+      get { return _uintParam?? default(uint); }
       set { _uintParam = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool UintParamSpecified
+    {
+      get { return _uintParam != null; }
+      set { if (value == (_uintParam== null)) _uintParam = value ? UintParam : (uint?)null; }
+    }
+    private bool ShouldSerializeUintParam() { return UintParamSpecified; }
+    private void ResetUintParam() { UintParamSpecified = false; }
+    
 
-    private long _int64Param = default(long);
+    private long? _int64Param;
     [global::ProtoBuf.ProtoMember(5, IsRequired = false, Name=@"int64_param", DataFormat = global::ProtoBuf.DataFormat.ZigZag)]
-    [global::System.ComponentModel.DefaultValue(default(long))]
     public long Int64Param
     {
-      get { return _int64Param; }
+      get { return _int64Param?? default(long); }
       set { _int64Param = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool Int64ParamSpecified
+    {
+      get { return _int64Param != null; }
+      set { if (value == (_int64Param== null)) _int64Param = value ? Int64Param : (long?)null; }
+    }
+    private bool ShouldSerializeInt64Param() { return Int64ParamSpecified; }
+    private void ResetInt64Param() { Int64ParamSpecified = false; }
+    
 
-    private ulong _uint64Param = default(ulong);
+    private ulong? _uint64Param;
     [global::ProtoBuf.ProtoMember(6, IsRequired = false, Name=@"uint64_param", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    [global::System.ComponentModel.DefaultValue(default(ulong))]
     public ulong Uint64Param
     {
-      get { return _uint64Param; }
+      get { return _uint64Param?? default(ulong); }
       set { _uint64Param = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool Uint64ParamSpecified
+    {
+      get { return _uint64Param != null; }
+      set { if (value == (_uint64Param== null)) _uint64Param = value ? Uint64Param : (ulong?)null; }
+    }
+    private bool ShouldSerializeUint64Param() { return Uint64ParamSpecified; }
+    private void ResetUint64Param() { Uint64ParamSpecified = false; }
+    
 
-    private bool _boolParam = default(bool);
+    private bool? _boolParam;
     [global::ProtoBuf.ProtoMember(7, IsRequired = false, Name=@"bool_param", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue(default(bool))]
     public bool BoolParam
     {
-      get { return _boolParam; }
+      get { return _boolParam?? default(bool); }
       set { _boolParam = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool BoolParamSpecified
+    {
+      get { return _boolParam != null; }
+      set { if (value == (_boolParam== null)) _boolParam = value ? BoolParam : (bool?)null; }
+    }
+    private bool ShouldSerializeBoolParam() { return BoolParamSpecified; }
+    private void ResetBoolParam() { BoolParamSpecified = false; }
+    
 
-    private float _floatParam = default(float);
+    private float? _floatParam;
     [global::ProtoBuf.ProtoMember(8, IsRequired = false, Name=@"float_param", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
-    [global::System.ComponentModel.DefaultValue(default(float))]
     public float FloatParam
     {
-      get { return _floatParam; }
+      get { return _floatParam?? default(float); }
       set { _floatParam = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool FloatParamSpecified
+    {
+      get { return _floatParam != null; }
+      set { if (value == (_floatParam== null)) _floatParam = value ? FloatParam : (float?)null; }
+    }
+    private bool ShouldSerializeFloatParam() { return FloatParamSpecified; }
+    private void ResetFloatParam() { FloatParamSpecified = false; }
+    
 
-    private double _doubleParam = default(double);
+    private double? _doubleParam;
     [global::ProtoBuf.ProtoMember(9, IsRequired = false, Name=@"double_param", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    [global::System.ComponentModel.DefaultValue(default(double))]
     public double DoubleParam
     {
-      get { return _doubleParam; }
+      get { return _doubleParam?? default(double); }
       set { _doubleParam = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool DoubleParamSpecified
+    {
+      get { return _doubleParam != null; }
+      set { if (value == (_doubleParam== null)) _doubleParam = value ? DoubleParam : (double?)null; }
+    }
+    private bool ShouldSerializeDoubleParam() { return DoubleParamSpecified; }
+    private void ResetDoubleParam() { DoubleParamSpecified = false; }
+    
 
-    private bool _isNull = default(bool);
+    private bool? _isNull;
     [global::ProtoBuf.ProtoMember(10, IsRequired = false, Name=@"is_null", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue(default(bool))]
     public bool IsNull
     {
-      get { return _isNull; }
+      get { return _isNull?? default(bool); }
       set { _isNull = value; }
     }
+    [global::System.Xml.Serialization.XmlIgnore]
+    [global::System.ComponentModel.Browsable(false)]
+    public bool IsNullSpecified
+    {
+      get { return _isNull != null; }
+      set { if (value == (_isNull== null)) _isNull = value ? IsNull : (bool?)null; }
+    }
+    private bool ShouldSerializeIsNull() { return IsNullSpecified; }
+    private void ResetIsNull() { IsNullSpecified = false; }
+    
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }

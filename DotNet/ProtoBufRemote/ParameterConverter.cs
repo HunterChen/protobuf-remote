@@ -21,46 +21,35 @@ namespace ProtoBufRemote
         public static bool FromMessage(RpcMessage.Parameter message, Type parameterType, out object parameter,
                                        out string errorMsg)
         {
-            //we can't check if the right primitive or string type was returned, because protobuf-net doesn't
-            //indicate which optional items were found, and assigns default values to everything. So whatever the user
-            //asks for we will give them, even if the server didn't provide it.
             if (parameterType.IsPrimitive)
             {
-                if (message.IsNull)
-                {
-                    errorMsg = String.Format("Cannot convert server return value of null into expected return type '{0}'.",
-                        parameterType);
-                    parameter = null;
-                    return false;
-                }
-
-                if (parameterType == typeof(bool))
+                if (parameterType == typeof(bool) && message.BoolParamSpecified)
                     parameter = message.BoolParam;
-                else if (parameterType == typeof(byte))
+                else if (parameterType == typeof(byte) && message.UintParamSpecified)
                     parameter = (byte)message.UintParam;
-                else if (parameterType == typeof(sbyte))
+                else if (parameterType == typeof(sbyte) && message.IntParamSpecified)
                     parameter = (sbyte)message.IntParam;
-                else if (parameterType == typeof(char))
+                else if (parameterType == typeof(char) && message.UintParamSpecified)
                     parameter = (char)message.UintParam;
-                else if (parameterType == typeof(short))
+                else if (parameterType == typeof(short) && message.IntParamSpecified)
                     parameter = (short)message.IntParam;
-                else if (parameterType == typeof(ushort))
+                else if (parameterType == typeof(ushort) && message.UintParamSpecified)
                     parameter = (ushort)message.UintParam;
-                else if (parameterType == typeof(int))
+                else if (parameterType == typeof(int) && message.IntParamSpecified)
                     parameter = message.IntParam;
-                else if (parameterType == typeof(uint))
+                else if (parameterType == typeof(uint) && message.UintParamSpecified)
                     parameter = message.UintParam;
-                else if (parameterType == typeof(long))
+                else if (parameterType == typeof(long) && message.Int64ParamSpecified)
                     parameter = message.Int64Param;
-                else if (parameterType == typeof(ulong))
+                else if (parameterType == typeof(ulong) && message.Uint64ParamSpecified)
                     parameter = message.Uint64Param;
-                else if (parameterType == typeof(float))
+                else if (parameterType == typeof(float) && message.FloatParamSpecified)
                     parameter = message.FloatParam;
-                else if (parameterType == typeof(double))
+                else if (parameterType == typeof(double) && message.DoubleParamSpecified)
                     parameter = message.DoubleParam;
                 else
                 {
-                    errorMsg = String.Format("Expected return type '{0}' is not supported. Only integral, string, and protobuf types are supported",
+                    errorMsg = String.Format("Expected return type '{0}' was not found in the parameter message, or type is not supported. Only integral, string, and protobuf types are supported",
                         parameterType);
                     parameter = null;
                     return false;
@@ -68,7 +57,20 @@ namespace ProtoBufRemote
             }
             else if (parameterType == typeof(string))
             {
-                parameter = message.IsNull ? null : message.StringParam;
+                if (message.IsNull)
+                {
+                    parameter = null;
+                }
+                else
+                {
+                    if (!message.StringParamSpecified)
+                    {
+                        errorMsg = String.Format("Expected string return type was not found in the parameter message");
+                        parameter = null;
+                        return false;
+                    }
+                    parameter = message.StringParam;
+                }
             }
             else
             {
@@ -259,16 +261,15 @@ namespace ProtoBufRemote
                 var memStream = new MemoryStream();
                 Serializer.NonGeneric.Serialize(memStream, parameter);
                 message.ProtoParam = memStream.ToArray();
-
             }
             return message;
         }
 
         public static bool IntFromMessage(RpcMessage.Parameter message, ref int value, ref string error)
         {
-            if (message.IsNull)
+            if (!message.IntParamSpecified)
             {
-                error = "Cannot convert parameter value of null into expected int type.";
+                error = "Parameter did not have expected int type.";
                 return false;
             }
             value = message.IntParam;
@@ -277,9 +278,9 @@ namespace ProtoBufRemote
 
         public static bool UintFromMessage(RpcMessage.Parameter message, ref uint value, ref string error)
         {
-            if (message.IsNull)
+            if (!message.UintParamSpecified)
             {
-                error = "Cannot convert parameter value of null into expected uint type.";
+                error = "Parameter did not have expected uint type.";
                 return false;
             }
             value = message.UintParam;
@@ -288,9 +289,9 @@ namespace ProtoBufRemote
 
         public static bool Int64FromMessage(RpcMessage.Parameter message, ref long value, ref string error)
         {
-            if (message.IsNull)
+            if (!message.Int64ParamSpecified)
             {
-                error = "Cannot convert parameter value of null into expected long type.";
+                error = "Parameter did not have expected long type.";
                 return false;
             }
             value = message.Int64Param;
@@ -299,9 +300,9 @@ namespace ProtoBufRemote
 
         public static bool Uint64FromMessage(RpcMessage.Parameter message, ref ulong value, ref string error)
         {
-            if (message.IsNull)
+            if (!message.Uint64ParamSpecified)
             {
-                error = "Cannot convert parameter value of null into expected ulong type.";
+                error = "Parameter did not have expected ulong type.";
                 return false;
             }
             value = message.Uint64Param;
@@ -310,9 +311,9 @@ namespace ProtoBufRemote
 
         public static bool BoolFromMessage(RpcMessage.Parameter message, ref bool value, ref string error)
         {
-            if (message.IsNull)
+            if (!message.BoolParamSpecified)
             {
-                error = "Cannot convert parameter value of null into expected bool type.";
+                error = "Parameter did not have expected bool type.";
                 return false;
             }
             value = message.BoolParam;
@@ -321,9 +322,9 @@ namespace ProtoBufRemote
 
         public static bool FloatFromMessage(RpcMessage.Parameter message, ref float value, ref string error)
         {
-            if (message.IsNull)
+            if (!message.FloatParamSpecified)
             {
-                error = "Cannot convert parameter value of null into expected float type.";
+                error = "Parameter did not have expected float type.";
                 return false;
             }
             value = message.FloatParam;
@@ -332,9 +333,9 @@ namespace ProtoBufRemote
 
         public static bool DoubleFromMessage(RpcMessage.Parameter message, ref double value, ref string error)
         {
-            if (message.IsNull)
+            if (!message.DoubleParamSpecified)
             {
-                error = "Cannot convert parameter value of null into expected double type.";
+                error = "Parameter did not have expected double type.";
                 return false;
             }
             value = message.DoubleParam;
@@ -343,7 +344,17 @@ namespace ProtoBufRemote
 
         public static bool StringFromMessage(RpcMessage.Parameter message, ref string value, ref string error)
         {
-            value = message.IsNull ? null : message.StringParam;
+            if (message.IsNull)
+            {
+                value = null;
+                return true;
+            }
+            if (!message.StringParamSpecified)
+            {
+                error = "Parameter did not have expected string type.";
+                return false;
+            }
+            value = message.StringParam;
             return true;
         }
 

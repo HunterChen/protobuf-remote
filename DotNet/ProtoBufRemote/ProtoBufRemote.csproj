@@ -76,7 +76,7 @@
   <ItemGroup>
     <None Include="RpcMessage.proto">
       <Generator>ProtoBufTool</Generator>
-      <CustomToolNamespace>%3bfixCase</CustomToolNamespace>
+      <CustomToolNamespace>%3bfixCase%3bdetectMissing</CustomToolNamespace>
       <LastGenOutput>RpcMessage.cs</LastGenOutput>
     </None>
   </ItemGroup>
