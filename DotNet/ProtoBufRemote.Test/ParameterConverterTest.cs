@@ -24,14 +24,20 @@ namespace ProtoBufRemote.Test
         [Test]
         public void FromMessageBoolTest()
         {
+            bool boolParam = false;
+            Assert.That(ParameterConverter.FromMessage(message, typeof(bool), out param, out errorMsg), Is.False);
+            Assert.That(ParameterConverter.BoolFromMessage(message, ref boolParam, ref errorMsg), Is.False);
             message.BoolParam = true;
             Assert.That(ParameterConverter.FromMessage(message, typeof(bool), out param, out errorMsg), Is.True);
             Assert.That(param, Is.True);
+            Assert.That(ParameterConverter.BoolFromMessage(message, ref boolParam, ref errorMsg), Is.True);
+            Assert.That(boolParam, Is.True);
         }
 
         [Test]
         public void FromMessageByteTest()
         {
+            Assert.That(ParameterConverter.FromMessage(message, typeof(byte), out param, out errorMsg), Is.False);
             message.UintParam = 42;
             Assert.That(ParameterConverter.FromMessage(message, typeof(byte), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo(42));
@@ -40,6 +46,7 @@ namespace ProtoBufRemote.Test
         [Test]
         public void FromMessageSbyteTest()
         {
+            Assert.That(ParameterConverter.FromMessage(message, typeof(sbyte), out param, out errorMsg), Is.False);
             message.IntParam = -42;
             Assert.That(ParameterConverter.FromMessage(message, typeof(sbyte), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo(-42));
@@ -48,6 +55,7 @@ namespace ProtoBufRemote.Test
         [Test]
         public void FromMessageCharTest()
         {
+            Assert.That(ParameterConverter.FromMessage(message, typeof(char), out param, out errorMsg), Is.False);
             message.UintParam = 'a';
             Assert.That(ParameterConverter.FromMessage(message, typeof(char), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo('a'));
@@ -56,6 +64,7 @@ namespace ProtoBufRemote.Test
         [Test]
         public void FromMessageShortTest()
         {
+            Assert.That(ParameterConverter.FromMessage(message, typeof(short), out param, out errorMsg), Is.False);
             message.IntParam = -42;
             Assert.That(ParameterConverter.FromMessage(message, typeof(short), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo(-42));
@@ -64,6 +73,7 @@ namespace ProtoBufRemote.Test
         [Test]
         public void FromMessageUshortTest()
         {
+            Assert.That(ParameterConverter.FromMessage(message, typeof(ushort), out param, out errorMsg), Is.False);
             message.UintParam = 42;
             Assert.That(ParameterConverter.FromMessage(message, typeof(ushort), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo(42));
@@ -72,57 +82,92 @@ namespace ProtoBufRemote.Test
         [Test]
         public void FromMessageIntTest()
         {
+            int intParam = 0;
+            Assert.That(ParameterConverter.FromMessage(message, typeof(int), out param, out errorMsg), Is.False);
+            Assert.That(ParameterConverter.IntFromMessage(message, ref intParam, ref errorMsg), Is.False);
             message.IntParam = -42;
             Assert.That(ParameterConverter.FromMessage(message, typeof(int), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo(-42));
+            Assert.That(ParameterConverter.IntFromMessage(message, ref intParam, ref errorMsg), Is.True);
+            Assert.That(intParam, Is.EqualTo(-42));
         }
 
         [Test]
         public void FromMessageUintTest()
         {
+            uint uintParam = 0;
+            Assert.That(ParameterConverter.FromMessage(message, typeof(uint), out param, out errorMsg), Is.False);
+            Assert.That(ParameterConverter.UintFromMessage(message, ref uintParam, ref errorMsg), Is.False);
             message.UintParam = 42;
             Assert.That(ParameterConverter.FromMessage(message, typeof(uint), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo(42));
+            Assert.That(ParameterConverter.UintFromMessage(message, ref uintParam, ref errorMsg), Is.True);
+            Assert.That(uintParam, Is.EqualTo(42));
         }
 
         [Test]
         public void FromMessageLongTest()
         {
+            long longParam = 0;
+            Assert.That(ParameterConverter.FromMessage(message, typeof(long), out param, out errorMsg), Is.False);
+            Assert.That(ParameterConverter.Int64FromMessage(message, ref longParam, ref errorMsg), Is.False);
             message.Int64Param = -42000000000;
             Assert.That(ParameterConverter.FromMessage(message, typeof(long), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo(-42000000000));
+            Assert.That(ParameterConverter.Int64FromMessage(message, ref longParam, ref errorMsg), Is.True);
+            Assert.That(longParam, Is.EqualTo(-42000000000));
         }
 
         [Test]
         public void FromMessageUlongTest()
         {
+            ulong ulongParam = 0;
+            Assert.That(ParameterConverter.FromMessage(message, typeof(ulong), out param, out errorMsg), Is.False);
+            Assert.That(ParameterConverter.Uint64FromMessage(message, ref ulongParam, ref errorMsg), Is.False);
             message.Uint64Param = 42000000000;
             Assert.That(ParameterConverter.FromMessage(message, typeof(ulong), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo(42000000000));
+            Assert.That(ParameterConverter.Uint64FromMessage(message, ref ulongParam, ref errorMsg), Is.True);
+            Assert.That(ulongParam, Is.EqualTo(42000000000));
         }
 
         [Test]
         public void FromMessageFloatTest()
         {
+            float floatParam = 0.0f;
+            Assert.That(ParameterConverter.FromMessage(message, typeof(float), out param, out errorMsg), Is.False);
+            Assert.That(ParameterConverter.FloatFromMessage(message, ref floatParam, ref errorMsg), Is.False);
             message.FloatParam = 42.0f;
             Assert.That(ParameterConverter.FromMessage(message, typeof(float), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo(42.0f));
+            Assert.That(ParameterConverter.FloatFromMessage(message, ref floatParam, ref errorMsg), Is.True);
+            Assert.That(floatParam, Is.EqualTo(42.0f));
         }
 
         [Test]
         public void FromMessageDoubleTest()
         {
+            double doubleParam = 0.0;
+            Assert.That(ParameterConverter.FromMessage(message, typeof(double), out param, out errorMsg), Is.False);
+            Assert.That(ParameterConverter.DoubleFromMessage(message, ref doubleParam, ref errorMsg), Is.False);
             message.DoubleParam = 42.0;
             Assert.That(ParameterConverter.FromMessage(message, typeof(double), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo(42.0));
+            Assert.That(ParameterConverter.DoubleFromMessage(message, ref doubleParam, ref errorMsg), Is.True);
+            Assert.That(doubleParam, Is.EqualTo(42.0));
         }
 
         [Test]
         public void FromMessageStringTest()
         {
+            string stringParam = null;
+            Assert.That(ParameterConverter.FromMessage(message, typeof(string), out param, out errorMsg), Is.False);
+            Assert.That(ParameterConverter.StringFromMessage(message, ref stringParam, ref errorMsg), Is.False);
             message.StringParam = "Hello";
             Assert.That(ParameterConverter.FromMessage(message, typeof(string), out param, out errorMsg), Is.True);
             Assert.That(param, Is.EqualTo("Hello"));
+            Assert.That(ParameterConverter.StringFromMessage(message, ref stringParam, ref errorMsg), Is.True);
+            Assert.That(stringParam, Is.EqualTo("Hello"));
         }
 
         [Test]
@@ -136,6 +181,9 @@ namespace ProtoBufRemote.Test
         [Test]
         public void FromMessageProtoTest()
         {
+            Assert.That(ParameterConverter.FromMessage(message, typeof(MultiplyInput), out param, out errorMsg), Is.False);
+            Assert.That(ParameterConverter.ProtoFromMessage(message, typeof(MultiplyInput), ref param, ref errorMsg), Is.False);
+
             var messageParam = new MultiplyInput();
             messageParam.FirstNumber = 10;
             messageParam.SecondNumber = 11;
@@ -146,6 +194,12 @@ namespace ProtoBufRemote.Test
 
             Assert.That(ParameterConverter.FromMessage(message, typeof(MultiplyInput), out param, out errorMsg), Is.True);
             MultiplyInput result = (MultiplyInput)param;
+            Assert.That(result.FirstNumber, Is.EqualTo(10));
+            Assert.That(result.SecondNumber, Is.EqualTo(11));
+            Assert.That(result.Prefix, Is.EqualTo("Test"));
+
+            Assert.That(ParameterConverter.ProtoFromMessage(message, typeof(MultiplyInput), ref param, ref errorMsg), Is.True);
+            result = (MultiplyInput)param;
             Assert.That(result.FirstNumber, Is.EqualTo(10));
             Assert.That(result.SecondNumber, Is.EqualTo(11));
             Assert.That(result.Prefix, Is.EqualTo("Test"));

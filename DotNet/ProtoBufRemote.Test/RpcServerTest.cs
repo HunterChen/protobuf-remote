@@ -155,7 +155,8 @@ namespace ProtoBufRemote.Test
         [Test]
         public void WrongParameterTypeTest()
         {
-            squareCallMessage.CallMessage.Parameters[0].IsNull = true;
+            squareCallMessage.CallMessage.Parameters[0].IntParamSpecified = false;
+            squareCallMessage.CallMessage.Parameters[0].UintParam = 20;
             server.ReceiveCall(squareCallMessage);
 
             controller.Verify(c => c.Send(It.Is<RpcMessage>(m => IsFailureResultMessage(m))));
