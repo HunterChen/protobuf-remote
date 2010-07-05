@@ -20,6 +20,10 @@ public:
 
 	virtual void Send(const RpcMessage& message);
 
+	unsigned int GetAndClearBytesRead();
+
+	unsigned int GetAndClearBytesWritten();
+
 private:
 	void Run();
 
@@ -36,6 +40,9 @@ private:
 		char* m_data;
 	};
 	std::queue<QueuedMessageData> m_sendMessages;
+
+	unsigned int m_bytesRead;
+	unsigned int m_bytesWritten;
 };
 
 }

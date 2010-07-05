@@ -32,6 +32,16 @@ void SocketRpcChannel::CloseAndJoin()
 	m_thread.join();
 }
 
+unsigned int SocketRpcChannel::GetAndClearBytesRead()
+{
+	return _InterlockedExchange(reinterpret_cast<LONG*>(&m_bytesRead), 0);
+}
+
+unsigned int SocketRpcChannel::GetAndClearBytesWritten()
+{
+	return _InterlockedExchange(reinterpret_cast<LONG*>(&m_bytesWritten), 0);
+}
+
 void SocketRpcChannel::Send(const RpcMessage& message)
 {
 	QueuedMessageData data;
@@ -107,6 +117,7 @@ void SocketRpcChannel::Run()
 			else
 			{
 				sendPos += bytesSent;
+				_InterlockedExchangeAdd(reinterpret_cast<LONG*>(&m_bytesWritten), bytesSent);
 
 				if (sendPos >= currentSendMessage.m_size)
 				{
@@ -146,6 +157,7 @@ void SocketRpcChannel::Run()
 			else
 			{
 				receivePos += bytesReceived;
+				_InterlockedExchangeAdd(reinterpret_cast<LONG*>(&m_bytesRead), bytesReceived);
 
 				if (receivePos >= receiveSize)
 				{
