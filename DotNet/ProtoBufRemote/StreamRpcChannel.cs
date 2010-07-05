@@ -20,7 +20,8 @@ namespace ProtoBufRemote
         private readonly Thread writeThread;
         private readonly Stream readStream;
         private readonly Stream writeStream;
-
+        private long totalBytesRead;
+        private long totalBytesWritten;
 
         public StreamRpcChannel(RpcController controller, Stream readStream, Stream writeStream)
             : base(controller)
@@ -30,6 +31,10 @@ namespace ProtoBufRemote
             readThread = new Thread(ReadRun);
             writeThread = new Thread(WriteRun);
         }
+
+        public long TotalBytesRead { get { return Interlocked.Read(ref totalBytesRead); } }
+        
+        public long TotalBytesWritten { get { return Interlocked.Read(ref totalBytesWritten); } }
 
         public override void Start()
         {
@@ -76,6 +81,7 @@ namespace ProtoBufRemote
                 try
                 {
                     bytesRead = readStream.Read(buffer, bufferPos, bytesRemaining);
+                    Interlocked.Add(ref totalBytesRead, bytesRead);
                     if (bytesRead == 0)
                         break;
                 }
@@ -120,6 +126,7 @@ namespace ProtoBufRemote
         {
             var waitHandles = new WaitHandle[] { queueEvent, closeEvent };
             bool isTerminated = false;
+            var memStream = new MemoryStream();
             while (!isTerminated)
             {
                 int waitIndex = WaitHandle.WaitAny(waitHandles);
@@ -130,7 +137,10 @@ namespace ProtoBufRemote
                     RpcMessage message = queuedMessages.Dequeue();
                     try
                     {
-                        Serializer.SerializeWithLengthPrefix(writeStream, message, PrefixStyle.Fixed32);
+                        memStream.Position = 0;
+                        Serializer.SerializeWithLengthPrefix(memStream, message, PrefixStyle.Fixed32);
+                        writeStream.Write(memStream.GetBuffer(), 0, (int)memStream.Position);
+                        Interlocked.Add(ref totalBytesWritten, memStream.Position);
                     }
                     catch (InvalidOperationException)
                     {
