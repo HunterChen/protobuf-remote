@@ -49,8 +49,9 @@ void SocketRpcChannel::Send(const RpcMessage& message)
 	data.m_size = messageSize + sizeof(int);
 	data.m_data = new char[data.m_size];
 	*reinterpret_cast<unsigned int*>(data.m_data) = messageSize;
-	message.SerializeToArray(data.m_data+sizeof(int), messageSize);
-
+	bool isOk = message.SerializeToArray(data.m_data+sizeof(int), messageSize);
+	assert(isOk);
+	
 	boost::lock_guard<boost::mutex> lock(m_sendMutex);
 	m_sendMessages.push(data);
 	WSASetEvent(m_sendEvent);
@@ -164,7 +165,8 @@ void SocketRpcChannel::Run()
 					if (isReceiving)
 					{
 						RpcMessage message;
-						message.ParseFromArray(&receiveBuffer[0], receiveSize);
+						bool isOk = message.ParseFromArray(&receiveBuffer[0], receiveSize);
+						assert(isOk);
 						m_controller->Receive(message);
 
 						isReceiving = false;
