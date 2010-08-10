@@ -37,12 +37,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(ProjectDir)obj\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\Lib\win32-vs10\debug_dll\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <IncludePath>$(ProtoBufIncludePath);$(BoostIncludePath);C:\Program Files\Microsoft DirectX SDK %28February 2010%29\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(ProjectDir)obj\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\Lib\win32-vs10\release_dll\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <IncludePath>$(ProtoBufIncludePath);$(BoostIncludePath);C:\Program Files\Microsoft DirectX SDK %28February 2010%29\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
@@ -52,6 +52,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -66,6 +67,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>../</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -92,10 +94,10 @@
   <ItemGroup>
     <CustomBuild Include="RpcMessage.proto">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\sdks\protobuf-2.3.0\protoc --cpp_out=%(RootDir)%(Directory) %(Filename)%(Extension)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProtoBufCompiler) --cpp_out=%(RootDir)%(Directory) %(Filename)%(Extension)</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling protocol buffer %(Filename)%(Extension)</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).pb.cc;%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\sdks\protobuf-2.3.0\protoc --cpp_out=%(RootDir)%(Directory) %(Filename)%(Extension)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProtoBufCompiler) --cpp_out=%(RootDir)%(Directory) %(Filename)%(Extension)</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling protocol buffer %(Filename)%(Extension)</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).pb.cc;%(Filename).pb.h;%(Outputs)</Outputs>
     </CustomBuild>
