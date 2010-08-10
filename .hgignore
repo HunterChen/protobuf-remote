@@ -11,6 +11,8 @@ syntax: glob
 *.opensdf
 obj/*
 bin/*
+Cpp/Lib
+Cpp/Release
 Thumbs.db
 _ReSharper*
 
