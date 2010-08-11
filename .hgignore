@@ -12,7 +12,7 @@ syntax: glob
 obj/*
 bin/*
 Cpp/Lib
-Cpp/Release
+DotNet/Bin
 Thumbs.db
 _ReSharper*
 
