@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include <ws2tcpip.h>
+#include <process.h>
 #include "ProtoBufRemote/RpcController.h"
 #include "ProtoBufRemote/RpcMessage.pb.h"
 #include "ProtoBufRemote/SocketRpcChannel.h"
@@ -15,7 +16,7 @@ namespace {
 	SocketRpcChannel* g_serverChannel;
 }
 
-void ServerThreadRun()
+unsigned int _stdcall ServerThreadRun(void * arg)
 {
 	ADDRINFO hints;
 	ADDRINFO* addrResult;
@@ -39,6 +40,8 @@ void ServerThreadRun()
 
 	freeaddrinfo(addrResult);
 	closesocket(listenSocket);
+
+    return 0;
 }
 
 class DummyRpcController : public RpcController
@@ -79,7 +82,7 @@ TEST(SocketRpcChannelTest, SendReceive)
 	WSADATA wsaData;
 	int result = WSAStartup(MAKEWORD(2,2), &wsaData);
 
-	boost::thread serverThread(ServerThreadRun);
+    HANDLE serverThread = reinterpret_cast<HANDLE>(_beginthreadex(NULL, 0, &ServerThreadRun, NULL, 0, NULL));
 
 	ADDRINFO hints;
 	ADDRINFO* addrResult;
@@ -92,7 +95,8 @@ TEST(SocketRpcChannelTest, SendReceive)
 	SOCKET connectSocket = socket(addrResult->ai_family, addrResult->ai_socktype, addrResult->ai_protocol);
 	result = connect(connectSocket, addrResult->ai_addr, (int)addrResult->ai_addrlen);
 
-	serverThread.join();
+    WaitForSingleObject(serverThread, INFINITE);
+    CloseHandle(serverThread);
 
 	DummyRpcController dummyController;
 	SocketRpcChannel clientChannel(&dummyController, connectSocket);

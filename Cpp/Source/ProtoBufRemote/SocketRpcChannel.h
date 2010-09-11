@@ -3,7 +3,6 @@
 
 #include <winsock2.h>
 #include <queue>
-#include <boost/thread.hpp>
 #include "ProtoBufRemote/RpcChannel.h"
 
 namespace ProtoBufRemote {
@@ -25,14 +24,15 @@ public:
 	unsigned int GetAndClearBytesWritten();
 
 private:
+    static unsigned int _stdcall ThreadRun(void* arg);
 	void Run();
 
 	SOCKET m_socket;
-	boost::thread m_thread;
+	HANDLE m_thread;
 	WSAEVENT m_sendEvent;
 	WSAEVENT m_terminateEvent;
 
-	boost::mutex m_sendMutex;
+	CRITICAL_SECTION m_sendMutex;
 
 	struct QueuedMessageData
 	{

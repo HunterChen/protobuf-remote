@@ -2,7 +2,7 @@
 #define PROTOBUFREMOTE_RPCCLIENT_H 1
 
 #include <string>
-#include <boost/unordered_map.hpp>
+#include <unordered_map>
 
 namespace ProtoBufRemote {
 
@@ -29,7 +29,7 @@ private:
 	RpcController* m_controller;
 	int m_nextId;
 
-	typedef boost::unordered_map<int, PendingCall*> PendingCallMap;
+	typedef std::unordered_map<int, PendingCall*> PendingCallMap;
 	PendingCallMap m_pendingCalls;
 };
 

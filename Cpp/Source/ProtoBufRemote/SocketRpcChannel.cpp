@@ -1,6 +1,10 @@
 
 #include "ProtoBufRemote/SocketRpcChannel.h"
 
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#include <process.h>
+
 #include "ProtoBufRemote/RpcController.h"
 #include "ProtoBufRemote/RpcMessage.pb.h"
 
@@ -12,6 +16,7 @@ SocketRpcChannel::SocketRpcChannel(RpcController* controller, SOCKET socket)
 {
 	m_sendEvent = WSACreateEvent();
 	m_terminateEvent = WSACreateEvent();
+    InitializeCriticalSection(&m_sendMutex);
 }
 
 SocketRpcChannel::~SocketRpcChannel()
@@ -19,17 +24,19 @@ SocketRpcChannel::~SocketRpcChannel()
 	CloseAndJoin();
 	WSACloseEvent(m_sendEvent);
 	WSACloseEvent(m_terminateEvent);
+    DeleteCriticalSection(&m_sendMutex);
 }
 
 void SocketRpcChannel::Start()
 {
-	m_thread = boost::thread(&SocketRpcChannel::Run, this);
+    m_thread = reinterpret_cast<HANDLE>(_beginthreadex(NULL, 0, &SocketRpcChannel::ThreadRun, this, 0, NULL));
 }
 
 void SocketRpcChannel::CloseAndJoin()
 {
 	WSASetEvent(m_terminateEvent);
-	m_thread.join();
+    WaitForSingleObject(m_thread, INFINITE);
+    CloseHandle(m_thread);
 }
 
 unsigned int SocketRpcChannel::GetAndClearBytesRead()
@@ -52,9 +59,17 @@ void SocketRpcChannel::Send(const RpcMessage& message)
 	bool isOk = message.SerializeToArray(data.m_data+sizeof(int), messageSize);
 	assert(isOk);
 	
-	boost::lock_guard<boost::mutex> lock(m_sendMutex);
+    EnterCriticalSection(&m_sendMutex);
 	m_sendMessages.push(data);
 	WSASetEvent(m_sendEvent);
+    LeaveCriticalSection(&m_sendMutex);
+}
+
+unsigned int _stdcall SocketRpcChannel::ThreadRun(void* arg)
+{
+    SocketRpcChannel* socketRpcChannel = static_cast<SocketRpcChannel*>(arg);
+    socketRpcChannel->Run();
+    return 0;
 }
 
 void SocketRpcChannel::Run()
@@ -86,7 +101,7 @@ void SocketRpcChannel::Run()
 		if (waitResult == 2)
 		{
 			assert(!isSending);
-			boost::lock_guard<boost::mutex> lock(m_sendMutex);
+			EnterCriticalSection(&m_sendMutex);
 			if (!m_sendMessages.empty())
 			{
 				currentSendMessage = m_sendMessages.front();
@@ -95,6 +110,7 @@ void SocketRpcChannel::Run()
 				isSendReady = true; //send immediately
 				sendPos = 0;
 			}
+            LeaveCriticalSection(&m_sendMutex);
 		}
 		else
 		{
@@ -124,7 +140,7 @@ void SocketRpcChannel::Run()
 				{
 					delete[] currentSendMessage.m_data;
 
-					boost::lock_guard<boost::mutex> lock(m_sendMutex);
+					EnterCriticalSection(&m_sendMutex);
 					if (m_sendMessages.empty())
 					{
 						WSAResetEvent(m_sendEvent);
@@ -136,6 +152,7 @@ void SocketRpcChannel::Run()
 						m_sendMessages.pop();
 						sendPos = 0;
 					}
+                    LeaveCriticalSection(&m_sendMutex);
 				}
 			}
 		}
