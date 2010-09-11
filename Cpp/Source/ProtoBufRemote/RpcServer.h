@@ -1,7 +1,7 @@
 #ifndef PROTOBUFREMOTE_RPCSERVER_H
 #define PROTOBUFREMOTE_RPCSERVER_H 1
 
-#include <boost/unordered_map.hpp>
+#include <unordered_map>
 #include "ProtoBufRemote/RpcMessage.pb.h"
 
 namespace ProtoBufRemote {
@@ -26,7 +26,7 @@ private:
 	RpcController* m_controller;
 	RpcMessage m_resultMessage;
 
-	typedef boost::unordered_map<std::string, RpcService*> ServiceMap;
+	typedef std::unordered_map<std::string, RpcService*> ServiceMap;
 	ServiceMap m_services;
 };
 

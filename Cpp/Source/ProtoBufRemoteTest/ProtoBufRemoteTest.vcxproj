@@ -41,7 +41,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IntDir>obj\$(Configuration)\</IntDir>
-    <LibraryPath>$(GmockDebugLibPath);$(ProtoBufDebugLibPath);$(BoostLibPath);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(GmockDebugLibPath);$(ProtoBufDebugLibPath);$(LibraryPath)</LibraryPath>
     <IncludePath>$(GtestIncludePath);$(GmockIncludePath);$(ProtoBufIncludePath);$(BoostIncludePath);C:\Program Files\Microsoft DirectX SDK %28February 2010%29\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -49,7 +49,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IntDir>obj\$(Configuration)\</IntDir>
-    <LibraryPath>$(GmockReleaseLibPath);$(ProtoBufReleaseLibPath);$(BoostLibPath);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(GmockReleaseLibPath);$(ProtoBufReleaseLibPath);$(LibraryPath)</LibraryPath>
     <IncludePath>$(GtestIncludePath);$(GmockIncludePath);$(ProtoBufIncludePath);$(BoostIncludePath);C:\Program Files\Microsoft DirectX SDK %28February 2010%29\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
