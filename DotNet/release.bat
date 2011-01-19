@@ -9,6 +9,7 @@ md temp_release
 md temp_release\%1
 
 robocopy Source "temp_release\%1\Source" *.cs *.proto *.sln *.csproj /s
+robocopy Samples "temp_release\%1\Samples" *.cs *.proto *.sln *.csproj /s
 robocopy Bin "temp_release\%1\Bin" ProtoBufRemote.dll ProtoBufRemote.pdb /s
 
 pushd temp_release

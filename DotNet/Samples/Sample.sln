@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimeServer", "PrimeServer\PrimeServer.csproj", "{3F60C1A9-4CC8-45E6-9848-E58EFD0D554A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimeClient", "PrimeClient\PrimeClient.csproj", "{FD4CD4E7-FD06-4193-B0BE-3E939FACA0EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F60C1A9-4CC8-45E6-9848-E58EFD0D554A}.Debug|x86.ActiveCfg = Debug|x86
+		{3F60C1A9-4CC8-45E6-9848-E58EFD0D554A}.Debug|x86.Build.0 = Debug|x86
+		{3F60C1A9-4CC8-45E6-9848-E58EFD0D554A}.Release|x86.ActiveCfg = Release|x86
+		{3F60C1A9-4CC8-45E6-9848-E58EFD0D554A}.Release|x86.Build.0 = Release|x86
+		{FD4CD4E7-FD06-4193-B0BE-3E939FACA0EC}.Debug|x86.ActiveCfg = Debug|x86
+		{FD4CD4E7-FD06-4193-B0BE-3E939FACA0EC}.Debug|x86.Build.0 = Debug|x86
+		{FD4CD4E7-FD06-4193-B0BE-3E939FACA0EC}.Release|x86.ActiveCfg = Release|x86
+		{FD4CD4E7-FD06-4193-B0BE-3E939FACA0EC}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
