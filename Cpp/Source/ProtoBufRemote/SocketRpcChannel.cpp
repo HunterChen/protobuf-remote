@@ -12,7 +12,7 @@
 namespace ProtoBufRemote {
 
 SocketRpcChannel::SocketRpcChannel(RpcController* controller, SOCKET socket)
-	: RpcChannel(controller), m_socket(socket)
+	: RpcChannel(controller), m_socket(socket), m_thread(0)
 {
 	m_sendEvent = WSACreateEvent();
 	m_terminateEvent = WSACreateEvent();
@@ -29,14 +29,22 @@ SocketRpcChannel::~SocketRpcChannel()
 
 void SocketRpcChannel::Start()
 {
-    m_thread = reinterpret_cast<HANDLE>(_beginthreadex(NULL, 0, &SocketRpcChannel::ThreadRun, this, 0, NULL));
+    if (!m_thread)
+    {
+        m_thread = reinterpret_cast<HANDLE>(_beginthreadex(NULL, 0, &SocketRpcChannel::ThreadRun, this, 0, NULL));
+    }
 }
 
 void SocketRpcChannel::CloseAndJoin()
 {
-	WSASetEvent(m_terminateEvent);
-    WaitForSingleObject(m_thread, INFINITE);
-    CloseHandle(m_thread);
+    if (m_thread)
+    {
+	    WSASetEvent(m_terminateEvent);
+        WaitForSingleObject(m_thread, INFINITE);
+        WSAResetEvent(m_terminateEvent);
+        CloseHandle(m_thread);
+        m_thread = 0;
+    }
 }
 
 unsigned int SocketRpcChannel::GetAndClearBytesRead()
