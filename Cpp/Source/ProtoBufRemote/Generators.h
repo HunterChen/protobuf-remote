@@ -198,7 +198,7 @@
 #define PBR_X_STUB_MAKE_CALL_WITH_RETURN_PTR(method) \
 	PBR_X_PARAM_TYPE(PBR_X_METHOD_RETURN(method)) resultValue; \
 	PBR_X_METHOD_NAME(method)(BOOST_PP_EXPR_IF(PBR_X_METHOD_HAS_PARAMS(method), \
-		BOOST_PP_SEQ_FOR_EACH_I(PBR_X_STUB_MAKE_CALL_PARAM, ~, PBR_X_METHOD_PARAMS(method))), &resultValue); \
+		BOOST_PP_SEQ_FOR_EACH_I(PBR_X_STUB_MAKE_CALL_PARAM, ~, PBR_X_METHOD_PARAMS(method)) BOOST_PP_COMMA()) &resultValue); \
 	result->PBR_X_PARAM_SET_FUNC(PBR_X_METHOD_RETURN(method))(resultValue); \
 	return true;
 
