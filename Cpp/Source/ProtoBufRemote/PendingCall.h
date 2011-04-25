@@ -3,6 +3,8 @@
 
 #include "ProtoBufRemote/RpcMessage.pb.h"
 
+typedef void *HANDLE; //don't want windows.h included by a header
+
 namespace ProtoBufRemote {
 
 class Parameter;
@@ -12,6 +14,8 @@ class PendingCall
 {
 public:
 	PendingCall(int id);
+
+    ~PendingCall();
 
 	int GetId() const { return m_id; }
 
@@ -23,7 +27,9 @@ public:
 
 private:
 	int m_id;
+    HANDLE m_event;
 	bool m_isCompleted;
+    RpcMessage::Parameter* m_resultMessage;
 	Parameter* m_result;
 };
 
