@@ -7,7 +7,7 @@
 
 namespace ProtoBufRemote {
 
-class SocketRpcChannel : RpcChannel
+class SocketRpcChannel : public RpcChannel
 {
 public:
 	SocketRpcChannel(RpcController* controller, SOCKET socket);
@@ -16,6 +16,8 @@ public:
 	void Start();
 
 	void CloseAndJoin();
+
+    bool IsClosed();
 
 	virtual void Send(const RpcMessage& message);
 
