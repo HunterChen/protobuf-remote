@@ -47,6 +47,11 @@ void SocketRpcChannel::CloseAndJoin()
     }
 }
 
+bool SocketRpcChannel::IsClosed()
+{
+    return (m_socket == INVALID_SOCKET);
+}
+
 unsigned int SocketRpcChannel::GetAndClearBytesRead()
 {
 	return _InterlockedExchange(reinterpret_cast<LONG*>(&m_bytesRead), 0);
