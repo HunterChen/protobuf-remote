@@ -9,9 +9,11 @@ syntax: glob
 *.log
 *.sdf
 *.opensdf
+*.docstates
 obj/*
 bin/*
 Cpp/Lib
+CppWithProtoBufC/Lib
 DotNet/Bin
 Thumbs.db
 _ReSharper*

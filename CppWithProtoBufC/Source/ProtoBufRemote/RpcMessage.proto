@@ -1,0 +1,35 @@
+
+package ProtoBufRemote;
+
+message RpcMessage {
+  required int32 id = 1;
+  optional Call call_message = 2;
+  optional Result result_message = 3;
+
+  message Call {
+    required string service = 1;
+    required string method = 2;
+	repeated Parameter parameters = 3;
+	required bool expects_result = 4;
+  }
+
+  message Result {
+    optional bool is_failed = 1;
+	optional string error_message = 2;
+    optional Parameter call_result = 3;
+  }
+
+  message Parameter {
+	optional bytes proto_param = 1;
+    optional string string_param = 2;
+	optional sint32 int_param = 3;
+	optional uint32 uint_param = 4;
+	optional sint64 int64_param = 5;
+	optional uint64 uint64_param = 6;
+	optional bool bool_param = 7;
+	optional float float_param = 8;
+	optional double double_param = 9;
+	optional bool is_null = 10;
+  }
+}
+
