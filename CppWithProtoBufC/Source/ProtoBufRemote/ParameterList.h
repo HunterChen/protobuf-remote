@@ -20,6 +20,10 @@ public:
 private:
 	friend RpcClient;
 
+    //noncopyable
+    ParameterList(const ParameterList& p);
+    ParameterList& operator=(const ParameterList& rhs);
+
 	RpcMessage* GetMessage() const { return const_cast<RpcMessage*>(&m_message); }
 
 	const RpcMessage& m_message;

@@ -40,6 +40,9 @@ public:
 	bool IsProto() const;
 
 private:
+    //noncopyable
+    Parameter& operator=(const Parameter& rhs);
+
 	const RpcMessageParameter& m_message;
 };
 

@@ -66,25 +66,25 @@ bool Parameter::IsProto() const
 signed char Parameter::GetChar() const
 {
 	assert(m_message.has_int_param);
-	return m_message.int_param;
+	return static_cast<signed char>(m_message.int_param);
 }
 
 unsigned char Parameter::GetUnsignedChar() const
 {
 	assert(m_message.has_uint_param);
-	return m_message.uint_param;
+	return static_cast<unsigned char>(m_message.uint_param);
 }
 
 short Parameter::GetShort() const
 {
 	assert(m_message.has_int_param);
-	return m_message.int_param;
+	return static_cast<short>(m_message.int_param);
 }
 
 unsigned short Parameter::GetUnsignedShort() const
 {
 	assert(m_message.has_uint_param);
-	return m_message.uint_param;
+	return static_cast<unsigned short>(m_message.uint_param);
 }
 
 int Parameter::GetInt() const
