@@ -25,6 +25,7 @@ PendingCall* RpcClient::Call(const char* service, const char* method, const Para
 
     //service should actually already be set, just assert it
 	RpcMessageCall* callMessage = message->call_message;
+    (void)service;
     assert(callMessage->service && strcmp(callMessage->service, service) == 0);
 
     //method should be preallocated, so just copy it
@@ -57,6 +58,7 @@ void RpcClient::CallWithoutResult(const char* service, const char* method, const
 
     //service should actually already be set, just assert it
 	RpcMessageCall* callMessage = message->call_message;
+    (void)service;
     assert(callMessage->service && strcmp(callMessage->service, service) == 0);
 
     //method should be preallocated, so just copy it

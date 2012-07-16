@@ -70,6 +70,7 @@ void SocketRpcChannel::Send(const RpcMessage& message)
 	data.m_data = new char[data.m_size];
 	*reinterpret_cast<unsigned int*>(data.m_data) = messageSize;
     size_t written = proto_buf_remote__rpc_message__pack(&message, reinterpret_cast<uint8_t*>(data.m_data+sizeof(int)));
+    (void)written;
 	assert(written == messageSize);
 	
     EnterCriticalSection(&m_sendMutex);
@@ -128,7 +129,7 @@ void SocketRpcChannel::Run()
 		else
 		{
 			WSANETWORKEVENTS networkEvents;
-			int result = WSAEnumNetworkEvents(m_socket, selectEvent, &networkEvents);
+			WSAEnumNetworkEvents(m_socket, selectEvent, &networkEvents);
 			isSendReady = (networkEvents.lNetworkEvents & FD_WRITE) ? true : false;
 			isReceiveReady = (networkEvents.lNetworkEvents & FD_READ) ? true : false;
 		}
