@@ -18,6 +18,8 @@ public:
 	unsigned int GetUnsignedInt() const;
 	long long GetInt64() const;
 	unsigned long long GetUnsignedInt64() const;
+    float GetFloat() const;
+    double GetDouble() const;
 
     bool GetBool() const;
 	const char* GetString() const;
@@ -33,6 +35,8 @@ public:
 	bool IsUnsignedInt() const;
 	bool IsInt64() const;
 	bool IsUnsignedInt64() const;
+    bool IsFloat() const;
+    bool IsDouble() const;
 
 	bool IsBool() const;
 	bool IsString() const;

@@ -59,6 +59,18 @@ void MutableParameter::SetUnsignedInt64(unsigned long long value)
 	m_message->uint64_param = value;
 }
 
+void MutableParameter::SetFloat(float value)
+{
+    m_message->has_float_param = 1;
+	m_message->float_param = value;
+}
+
+void MutableParameter::SetDouble(double value)
+{
+    m_message->has_double_param = 1;
+	m_message->double_param = value;
+}
+
 void MutableParameter::SetBool(bool value)
 {
     m_message->has_bool_param = 1;

@@ -48,6 +48,16 @@ bool Parameter::IsUnsignedInt64() const
 	return m_message.has_uint64_param ? true : false;
 }
 
+bool Parameter::IsFloat() const
+{
+	return m_message.has_float_param ? true : false;
+}
+
+bool Parameter::IsDouble() const
+{
+	return m_message.has_double_param ? true : false;
+}
+
 bool Parameter::IsBool() const
 {
 	return m_message.has_bool_param ? true : false;
@@ -109,6 +119,18 @@ unsigned long long Parameter::GetUnsignedInt64() const
 {
 	assert(m_message.has_uint64_param);
 	return m_message.uint64_param;
+}
+
+float Parameter::GetFloat() const
+{
+	assert(m_message.has_float_param);
+	return m_message.float_param;
+}
+
+double Parameter::GetDouble() const
+{
+	assert(m_message.has_double_param);
+	return m_message.double_param;
 }
 
 bool Parameter::GetBool() const

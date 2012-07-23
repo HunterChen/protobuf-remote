@@ -64,6 +64,8 @@
 #define PBR_UINT ((1, 0, 1, unsigned int, unsigned int, unsigned int, SetUnsignedInt, GetUnsignedInt, IsUnsignedInt))
 #define PBR_INT64 ((1, 0, 1, long long, long long, long long, SetInt64, GetInt64, IsInt64))
 #define PBR_UINT64 ((1, 0, 1, unsigned long long, unsigned long long, unsigned long long, SetUnsignedInt64, GetUnsignedInt64, IsUnsignedInt64))
+#define PBR_FLOAT ((1, 0, 1, float, float, float, SetFloat, GetFloat, IsFloat))
+#define PBR_DOUBLE ((1, 0, 1, double, double, double, SetDouble, GetDouble, IsDouble))
 #define PBR_BOOL ((1, 0, 1, bool, bool, bool, SetBool, GetBool, IsBool))
 #define PBR_STRING ((1, 1, 1, std::string, const std::string&, void, SetString, GetString, IsString))
 #define PBR_WCHAR ((1, 0, 1, wchar_t, wchar_t, wchar_t, SetWChar, GetWChar, IsWChar))

@@ -18,6 +18,8 @@ public:
 	void SetUnsignedInt(unsigned int value);
 	void SetInt64(long long value);
 	void SetUnsignedInt64(unsigned long long value);
+    void SetFloat(float value);
+    void SetDouble(double value);
 
 	void SetBool(bool value);
 	void SetString(const char* value);
